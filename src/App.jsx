@@ -139,13 +139,13 @@ const Portfolio = () => {
           </div>
           
           <div className="flex justify-center items-center space-x-3 sm:space-x-4 mb-6 sm:mb-8">
-            <a href="https://github.com" className="p-2 sm:p-3 bg-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110">
+            <a href="https://github.com/aakashkadyan" className="p-2 sm:p-3 bg-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110">
               <Github size={18} className="text-gray-700 sm:w-5 sm:h-5" />
             </a>
-            <a href="https://linkedin.com" className="p-2 sm:p-3 bg-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110">
+            <a href="https://linkedin.com/in/aakash-kadiyan-6911b1194/" className="p-2 sm:p-3 bg-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110">
               <Linkedin size={18} className="text-blue-600 sm:w-5 sm:h-5" />
             </a>
-            <a href="mailto:contact@example.com" className="p-2 sm:p-3 bg-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110">
+            <a href="mailto:aakashkadiyan93@gmail.com" className="p-2 sm:p-3 bg-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110">
               <Mail size={18} className="text-red-500 sm:w-5 sm:h-5" />
             </a>
           </div>
