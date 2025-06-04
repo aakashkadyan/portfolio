@@ -1,10 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Menu, X, Github, Linkedin, Mail, Phone, ExternalLink, User, Code, Home, MessageCircle, Award, Star } from 'lucide-react';
 
 const Portfolio = () => {
   const [activeSection, setActiveSection] = useState('home');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null);
+  const form = useRef();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -13,6 +21,63 @@ const Portfolio = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Handle form input changes
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value
+    });
+  };
+
+  // Handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus(null);
+
+    // Create form data from the form
+    const formElement = e.target;
+    const formDataObj = new FormData(formElement);
+    
+    try {
+      // Submit to formsubmit.co via fetch
+      const response = await fetch('https://formsubmit.co/ajax/aakashkadiyan93@gmail.com', {
+        method: 'POST',
+        body: formDataObj,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+      
+      const data = await response.json();
+      
+      if (data.success === 'true' || data.success === true) {
+        // Success
+        setSubmitStatus('success');
+        setFormData({ name: '', email: '', message: '' });
+        
+        // Scroll to form to show the success message
+        const contactSection = document.getElementById('contact');
+        if (contactSection) {
+          contactSection.scrollIntoView({ behavior: 'smooth' });
+        }
+      } else {
+        throw new Error('Form submission failed');
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+      
+      // Hide the status message after 5 seconds
+      setTimeout(() => {
+        setSubmitStatus(null);
+      }, 5000);
+    }
+  };
 
   const projects = [
     {
@@ -53,8 +118,6 @@ const Portfolio = () => {
     }
   ];
 
-
-
   const scrollToSection = (sectionId) => {
     setActiveSection(sectionId);
     setIsMenuOpen(false);
@@ -77,8 +140,6 @@ const Portfolio = () => {
       <span>{children}</span>
     </button>
   );
-
-
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50">
@@ -176,9 +237,9 @@ const Portfolio = () => {
               </h3>
               <p className="text-gray-600 leading-relaxed mb-4 text-sm sm:text-base">
               I'm a Full Stack Developer with a strong focus on backend technologies and over 1.5 years of experience. At StrategyCoGlobal, I helped build hirewitheve.ai and led the development of Tracey—an internal data annotation tool that significantly improved productivity and accuracy. 
-              My expertise includes JavaScript, ReactJS, Node.js, Python, MongoDB, and REST APIs. I’ve also built personal projects like HireNest, a job board web app. With a background in data analysis and a passion for clean, scalable solutions, 
+              My expertise includes JavaScript, ReactJS, Node.js, Python, MongoDB, and REST APIs. I've also built personal projects like HireNest, a job board web app. With a background in data analysis and a passion for clean, scalable solutions, 
               <br/>
-              I’m always eager to explore new technologies, solve real-world problems, and collaborate on impactful projects.
+              I'm always eager to explore new technologies, solve real-world problems, and collaborate on impactful projects.
               </p>
             
               
@@ -277,8 +338,6 @@ const Portfolio = () => {
               <p className="text-gray-600 leading-relaxed mb-6 text-sm sm:text-base">
               I'm currently exploring new opportunities and open to exciting projects where I can contribute and grow.
               If you have something in mind or just want to connect, feel free to reach out!
-
-
               </p>
               
               <div className="space-y-4 sm:space-y-6">
@@ -316,50 +375,76 @@ const Portfolio = () => {
                   </div>
                   
                 </div>
-
-                
               </div>
             </div>
             
             <div className="bg-gradient-to-br from-blue-50 to-purple-50 p-4 sm:p-6 lg:p-8 rounded-xl">
-              <div className="space-y-4 sm:space-y-5">
-              
+              <form 
+                onSubmit={handleSubmit}
+                className="space-y-4 sm:space-y-5"
+              >
+                {submitStatus === 'success' && (
+                  <div className="bg-green-100 text-green-700 p-4 rounded-lg text-sm font-medium animate-fade-in">
+                    Thank you! Your message has been sent successfully. I'll get back to you soon.
+                  </div>
+                )}
+                {submitStatus === 'error' && (
+                  <div className="bg-red-100 text-red-700 p-4 rounded-lg text-sm font-medium animate-fade-in">
+                    Sorry, there was an error sending your message. Please try again or contact me directly.
+                  </div>
+                )}
                 <div>
                   <label className="block text-sm sm:text-base font-medium text-gray-700 mb-2">Name</label>
                   <input 
                     type="text" 
+                    name="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
                     className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-300 text-sm sm:text-base"
                     placeholder="Your name"
+                    required
                   />
                 </div>
                 <div>
                   <label className="block text-sm sm:text-base font-medium text-gray-700 mb-2">Email</label>
                   <input 
                     type="email" 
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
                     className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-300 text-sm sm:text-base"
                     placeholder="your@email.com"
+                    required
                   />
                 </div>
                 <div>
                   <label className="block text-sm sm:text-base font-medium text-gray-700 mb-2">Message</label>
                   <textarea 
+                    name="message"
+                    value={formData.message}
+                    onChange={handleInputChange}
                     rows="4" 
                     className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-300 resize-none text-sm sm:text-base"
                     placeholder="Tell me about your project..."
+                    required
                   ></textarea>
                 </div>
+                {/* FormSubmit configuration */}
+                <input type="hidden" name="_subject" value="New Portfolio Contact Form Submission" />
+                <input type="hidden" name="_template" value="table" />
+                <input type="hidden" name="_captcha" value="false" />
+                <input type="text" name="_honey" style={{ display: 'none' }} />
                 <button 
-                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 sm:py-4 rounded-lg font-semibold hover:shadow-lg transition-all duration-300 hover:scale-105 text-sm sm:text-base"
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 sm:py-4 rounded-lg font-semibold hover:shadow-lg transition-all duration-300 hover:scale-105 text-sm sm:text-base disabled:opacity-70 disabled:cursor-not-allowed"
                 >
-                  Send Message
+                  {isSubmitting ? 'Sending...' : 'Send Message'}
                 </button>
-                
-              </div>
-
+              </form>
             </div>
           </div>
         </div>
-        
       </section>
 
       {/* Footer */}
