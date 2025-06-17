@@ -15,7 +15,7 @@ const Portfolio = () => {
   const [selectedBlog, setSelectedBlog] = useState(null);
   const form = useRef();
   // Typing animation state for name
-  const fullName = 'Aakash Kadiyan';
+  const fullName = "Hi, I'm Aakash Kadiyan";
   const [typedName, setTypedName] = useState('');
   const [showCursor, setShowCursor] = useState(true);
 
@@ -28,18 +28,24 @@ const Portfolio = () => {
   }, []);
 
   useEffect(() => {
-    let i = 0;
+    const indexRef = { current: 0 };
     setTypedName('');
     setShowCursor(true);
+
     const typingInterval = setInterval(() => {
-      if (i < fullName.length) {
-        setTypedName((prev) => prev + fullName.charAt(i));
-        i++;
-      } else {
-        clearInterval(typingInterval);
-        setShowCursor(true);
-      }
+      setTypedName((prev) => {
+        if (indexRef.current < fullName.length) {
+          const next = prev + fullName[indexRef.current];
+          indexRef.current += 1;
+          return next;
+        } else {
+          clearInterval(typingInterval);
+          setShowCursor(true);
+          return prev;
+        }
+      });
     }, 120);
+
     return () => clearInterval(typingInterval);
   }, []);
 
@@ -357,8 +363,8 @@ By understanding these concepts and applying them effectively, you can write mor
             <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 bg-gradient-to-br from-blue-600 to-purple-600 rounded-full mx-auto mb-4 flex items-center justify-center">
               <User size={32} className="text-white sm:w-10 sm:h-10 md:w-12 md:h-12" />
             </div>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 leading-tight">
-              <span className="bg-gradient-to-r from-[#2563eb] to-[#1e40af] bg-clip-text text-transparent font-bold" style={{ minHeight: 40 }}>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4">
+              <span className="text-blue-500">
                 {typedName}
                 <span className={showCursor ? 'inline-block animate-pulse' : ''} style={{ color: '#2563eb' }}>|</span>
               </span>
