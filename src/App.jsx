@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Menu, X, Github, Linkedin, Mail, Phone, ExternalLink, User, Code, Home, MessageCircle, Award, Star } from 'lucide-react';
+import { Menu, X, Github, Linkedin, Mail, Phone, ExternalLink, User, Code, Home, MessageCircle, Award, Star, BookOpen, Share2, Facebook, Linkedin as LinkedinIcon } from 'lucide-react';
 
 const Portfolio = () => {
   const [activeSection, setActiveSection] = useState('home');
@@ -12,7 +12,12 @@ const Portfolio = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null);
+  const [selectedBlog, setSelectedBlog] = useState(null);
   const form = useRef();
+  // Typing animation state for name
+  const fullName = 'Aakash Kadiyan';
+  const [typedName, setTypedName] = useState('');
+  const [showCursor, setShowCursor] = useState(true);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,6 +25,22 @@ const Portfolio = () => {
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    let i = 0;
+    setTypedName('');
+    setShowCursor(true);
+    const typingInterval = setInterval(() => {
+      if (i < fullName.length) {
+        setTypedName((prev) => prev + fullName.charAt(i));
+        i++;
+      } else {
+        clearInterval(typingInterval);
+        setShowCursor(true);
+      }
+    }, 120);
+    return () => clearInterval(typingInterval);
   }, []);
 
   // Handle form input changes
@@ -83,38 +104,134 @@ const Portfolio = () => {
     {
       id: 1,
       title: "HireNest - A Job Portal",
-      description: "A full-stack e-commerce solution built with React, Node.js, and MongoDB. Features include user authentication, payment integration, and admin dashboard.",
+      description: "HireNest is a modern Job Board platform for job seekers and employers. Discover, post, and manage jobs with AI-powered matching Alogrithms.",
       tech: ["React", "Node.js", "MongoDB", "Stripe"],
-      github: "https://github.com/yourusername/ecommerce",
-      live: "https://your-ecommerce-demo.com",
-      image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&h=250&fit=crop"
+      github: "https://github.com/aakashkadyan/hirenest_app_frontend",
+      live: "https://hirenest-app-frontend.vercel.app/",
+      image: "https://i.postimg.cc/Dwjq2xKL/hirenest-updated.png" // Replace with actual uploaded screenshot URL
     },
     {
       id: 2,
       title: "Task Management App",
-      description: "A collaborative task management application with real-time updates, drag-and-drop functionality, and team collaboration features.",
-      tech: ["React", "Firebase", "Material-UI", "Socket.io"],
+      description: "A Task management app to organize and track your day-to-day tasks. Easily add, update, and monitor your progress with notifications and a clean interface.",
+      tech: ["React", "NextJs", "PostGreSQL"],
       github: "https://github.com/aakashkadyan/Task_Management_System",
-      live: "https://task-management-system-a6x8kp8lm-aakash-kadiyans-projects.vercel.app/",
+      live: "https://task-management-system-weld-five.vercel.app/",
       image: "https://i.postimg.cc/bY78jQct/Screenshot-from-2025-05-29-17-05-54.png"
+    }
+  ];
+
+  const blogPosts = [
+    {
+      id: 1,
+      title: "Building Scalable Web Applications with React and Node.js",
+      excerpt: "Learn the best practices for creating scalable web applications using React for the frontend and Node.js for the backend...",
+      content: `Building scalable web applications requires careful consideration of both frontend and backend architecture. In this comprehensive guide, we'll explore how to create robust applications using React and Node.js.
+
+Key Topics Covered:
+1. Frontend Architecture with React
+   - Component structure and organization
+   - State management best practices
+   - Performance optimization techniques
+   - Code splitting and lazy loading
+
+2. Backend Development with Node.js
+   - RESTful API design
+   - Database integration
+   - Authentication and authorization
+   - Error handling and logging
+
+3. Scalability Considerations
+   - Horizontal vs vertical scaling
+   - Load balancing strategies
+   - Caching mechanisms
+   - Database optimization
+
+4. Best Practices
+   - Code organization
+   - Testing strategies
+   - Deployment workflows
+   - Monitoring and maintenance
+
+By following these guidelines, you'll be able to build applications that can handle growing user bases and increasing data loads while maintaining performance and reliability.`,
+      date: "March 15, 2024",
+      readTime: "5 min read",
+      category: "Web Development",
+      image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400&h=250&fit=crop"
+    },
+    {
+      id: 2,
+      title: "The Future of AI in Software Development",
+      excerpt: "Exploring how artificial intelligence is transforming the way we write, test, and maintain code...",
+      content: `Artificial Intelligence is revolutionizing the software development landscape in unprecedented ways. This article delves into the current state and future possibilities of AI in software development.
+
+Key Areas of Impact:
+1. Code Generation and Assistance
+   - AI-powered code completion
+   - Automated code generation
+   - Intelligent refactoring suggestions
+   - Bug detection and prevention
+
+2. Testing and Quality Assurance
+   - Automated test generation
+   - Intelligent test case optimization
+   - Performance testing automation
+   - Security vulnerability detection
+
+3. Development Workflow Enhancement
+   - Project planning and estimation
+   - Code review automation
+   - Documentation generation
+   - Deployment optimization
+
+4. Future Possibilities
+   - Self-healing systems
+   - Autonomous code maintenance
+   - Predictive development
+   - Natural language programming
+
+The integration of AI in software development is not just about automation; it's about augmenting human capabilities and enabling developers to focus on creative problem-solving while AI handles routine tasks.`,
+      date: "March 10, 2024",
+      readTime: "4 min read",
+      category: "Artificial Intelligence",
+      image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400&h=250&fit=crop"
     },
     {
       id: 3,
-      title: "Weather Dashboard",
-      description: "A responsive weather application with location-based forecasts, interactive maps, and detailed weather analytics.",
-      tech: ["React", "OpenWeather API", "Chart.js", "Tailwind CSS"],
-      github: "https://github.com/yourusername/weather",
-      live: "https://your-weather-demo.com",
-      image: "https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?w=400&h=250&fit=crop"
-    },
-    {
-      id: 4,
-      title: "Social Media Dashboard",
-      description: "A comprehensive social media analytics dashboard with data visualization and automated reporting features.",
-      tech: ["React", "D3.js", "Express", "PostgreSQL"],
-      github: "https://github.com/yourusername/social-dashboard",
-      live: "https://your-dashboard-demo.com",
-      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=250&fit=crop"
+      title: "Mastering TypeScript: A Comprehensive Guide",
+      excerpt: "A deep dive into TypeScript features, best practices, and how to leverage its type system effectively...",
+      content: `TypeScript has become an essential tool in modern web development, offering powerful type safety and enhanced developer experience. This comprehensive guide covers everything you need to know to master TypeScript.
+
+Core Concepts:
+1. Type System Fundamentals
+   - Basic types and type inference
+   - Interfaces and type aliases
+   - Generics and type parameters
+   - Union and intersection types
+
+2. Advanced TypeScript Features
+   - Decorators and metadata
+   - Utility types
+   - Conditional types
+   - Mapped types
+
+3. Best Practices
+   - Type safety strategies
+   - Code organization
+   - Module system usage
+   - Configuration management
+
+4. Integration with Frameworks
+   - React with TypeScript
+   - Node.js backend development
+   - Testing strategies
+   - Build tool configuration
+
+By understanding these concepts and applying them effectively, you can write more maintainable, scalable, and robust applications while catching potential errors at compile time rather than runtime.`,
+      date: "March 5, 2024",
+      readTime: "6 min read",
+      category: "Programming",
+      image: "https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=400&h=250&fit=crop"
     }
   ];
 
@@ -141,16 +258,65 @@ const Portfolio = () => {
     </button>
   );
 
+  const handleBlogClick = (post) => {
+    setSelectedBlog(post);
+    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+  };
+
+  const handleCloseBlog = () => {
+    setSelectedBlog(null);
+    document.body.style.overflow = 'auto'; // Restore background scrolling
+  };
+
+  const handleSocialShare = (platform) => {
+    const url = encodeURIComponent(window.location.href);
+    const title = encodeURIComponent(selectedBlog.title);
+    const text = encodeURIComponent(selectedBlog.excerpt);
+
+    let shareUrl = '';
+    switch (platform) {
+      case 'facebook':
+        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+        break;
+      case 'linkedin':
+        shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${url}`;
+        break;
+      case 'medium':
+        shareUrl = `https://medium.com/m/signin?redirect=https://medium.com/new-story?title=${title}&text=${text}`;
+        break;
+      case 'reddit':
+        shareUrl = `https://www.reddit.com/submit?url=${url}&title=${title}`;
+        break;
+      default:
+        return;
+    }
+
+    window.open(shareUrl, '_blank', 'width=600,height=400');
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50">
+    <div className="min-h-screen bg-gradient-to-br from-[#e9effd] via-[#f7faff] to-[#e0e7ff] font-sans overflow-x-hidden">
       {/* Navigation */}
       <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-white/95 backdrop-blur-md shadow-lg' : 'bg-transparent'
-      }`}>
+        isScrolled ? 'bg-white/70 backdrop-blur-md shadow-lg' : 'bg-white/40 backdrop-blur-md'
+      }`} style={{borderBottom: '1px solid #e0e7ff'}}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="flex justify-between items-center py-3 sm:py-4">
-            <div className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              Portfolio
+            <div className="flex items-center">
+              <div className="flex items-center space-x-4">
+                <div className="flex items-center justify-center">
+                  <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                      <linearGradient id="logo-gradient" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%" stopColor="#2563eb" />
+                        <stop offset="100%" stopColor="#1e40af" />
+                      </linearGradient>
+                    </defs>
+                    <polygon points="32,6 58,19 58,45 32,58 6,45 6,19" stroke="url(#logo-gradient)" strokeWidth="4" fill="none" />
+                    <text x="32" y="40" textAnchor="middle" fontSize="26" fontWeight="bold" fill="url(#logo-gradient)" fontFamily="monospace">AK</text>
+                  </svg>
+                </div>
+              </div>
             </div>
 
             {/* Desktop Navigation */}
@@ -158,6 +324,7 @@ const Portfolio = () => {
               <NavLink id="home" icon={Home}>Home</NavLink>
               <NavLink id="about" icon={User}>About</NavLink>
               <NavLink id="projects" icon={Code}>Projects</NavLink>
+              <NavLink id="blog" icon={BookOpen}>Blog</NavLink>
               <NavLink id="contact" icon={MessageCircle}>Contact</NavLink>
             </div>
 
@@ -176,6 +343,7 @@ const Portfolio = () => {
               <NavLink id="home" icon={Home}>Home</NavLink>
               <NavLink id="about" icon={User}>About</NavLink>
               <NavLink id="projects" icon={Code}>Projects</NavLink>
+              <NavLink id="blog" icon={BookOpen}>Blog</NavLink>
               <NavLink id="contact" icon={MessageCircle}>Contact</NavLink>
             </div>
           )}
@@ -190,8 +358,9 @@ const Portfolio = () => {
               <User size={32} className="text-white sm:w-10 sm:h-10 md:w-12 md:h-12" />
             </div>
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 leading-tight">
-              <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 bg-clip-text text-transparent">
-                Aakash Kadiyan
+              <span className="bg-gradient-to-r from-[#2563eb] to-[#1e40af] bg-clip-text text-transparent font-bold" style={{ minHeight: 40 }}>
+                {typedName}
+                <span className={showCursor ? 'inline-block animate-pulse' : ''} style={{ color: '#2563eb' }}>|</span>
               </span>
             </h1>
             <p className="text-base sm:text-lg md:text-xl text-gray-600 mb-6 px-4 sm:px-0">
@@ -214,7 +383,7 @@ const Portfolio = () => {
           <div className="flex justify-center">
             <button
               onClick={() => scrollToSection('projects')}
-              className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full text-sm sm:text-base font-semibold hover:shadow-2xl transition-all duration-300 hover:scale-105"
+              className="bg-[#2563eb] hover:bg-blue-700 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full text-sm sm:text-base font-semibold shadow-md transition-all duration-300 hover:scale-105"
             >
               View My Work
             </button>
@@ -226,13 +395,13 @@ const Portfolio = () => {
       <section id="about" className="py-12 sm:py-16 md:py-20 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-8 sm:mb-12">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-blue-700">
               About Me
             </h2>
           </div>
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             <div className="order-2 lg:order-1">
-              <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-4 text-gray-800">
+              <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-4 text-blue-700">
                 Passionate Developer with Creative Vision
               </h3>
               <p className="text-gray-600 leading-relaxed mb-4 text-sm sm:text-base">
@@ -250,7 +419,7 @@ const Portfolio = () => {
                 </div>
                 <div className="bg-gradient-to-br from-purple-50 to-purple-100 p-4 sm:p-5 rounded-lg">
                   <h4 className="font-semibold text-purple-800 mb-2 text-sm sm:text-base">Backend</h4>
-                  <p className="text-xs sm:text-sm text-purple-600">Node.js, Python, MySql, MongoDB</p>
+                  <p className="text-xs sm:text-sm text-purple-600">Node.js, FastAPI, Python, MySql, MongoDB</p>
                 </div>
               </div>
             </div>
@@ -265,23 +434,25 @@ const Portfolio = () => {
 
       
       {/* Projects Section */}
-      <section id="projects" className="py-12 sm:py-16 md:py-20 bg-white">
+      <section id="projects" className="py-12 sm:py-16 md:py-20 bg-blue-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-8 sm:mb-12">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-blue-700">
               Featured Projects
             </h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
             {projects.map((project) => (
-              <div key={project.id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:scale-[1.02]">
-                <img 
-                  src={project.image} 
-                  alt={project.title}
-                  className="w-full h-40 sm:h-48 md:h-40 lg:h-48 object-cover"
-                />
+              <div key={project.id} className="bg-white/70 backdrop-blur-lg rounded-2xl shadow-xl transition-all duration-500 hover:shadow-2xl animate-fade-in p-6">
+                <div className="w-full h-64 bg-white rounded-t-xl flex items-center justify-center">
+                  <img 
+                    src={project.image} 
+                    alt={project.title}
+                    className="w-full h-full object-contain"
+                  />
+                </div>
                 <div className="p-4 sm:p-6">
-                  <h3 className="text-lg sm:text-xl font-bold mb-2 sm:mb-3 text-gray-800">{project.title}</h3>
+                  <h3 className="text-lg sm:text-xl font-bold mb-2 sm:mb-3 text-blue-700">{project.title}</h3>
                   <p className="text-gray-600 mb-3 sm:mb-4 leading-relaxed text-sm sm:text-base line-clamp-3">
                     {project.description}
                   </p>
@@ -309,7 +480,7 @@ const Portfolio = () => {
                     </a>
                     <a 
                       href={project.live}
-                      className="flex items-center justify-center sm:justify-start space-x-2 text-gray-700 hover:text-purple-600 transition-colors duration-300 text-sm sm:text-base py-2 sm:py-0"
+                      className="flex items-center justify-center sm:justify-start space-x-2 text-gray-700 hover:text-blue-700 transition-colors duration-300 text-sm sm:text-base py-2 sm:py-0"
                     >
                       <ExternalLink size={16} />
                       <span>Demo</span>
@@ -322,17 +493,144 @@ const Portfolio = () => {
         </div>
       </section>
 
+      {/* Blog Section */}
+      <section id="blog" className="py-12 sm:py-16 md:py-20 bg-gradient-to-br from-slate-50 to-blue-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="text-center mb-8 sm:mb-12">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-blue-700">
+              Latest Articles
+            </h2>
+            <p className="mt-4 text-gray-600 text-sm sm:text-base">
+              Insights, tutorials, and thoughts on web development and technology
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+            {blogPosts.map((post) => (
+              <article key={post.id} className="bg-white/70 backdrop-blur-lg rounded-2xl shadow-xl transition-all duration-500 hover:shadow-2xl animate-fade-in p-6">
+                <img 
+                  src={post.image} 
+                  alt={post.title}
+                  className="w-full h-48 object-cover"
+                />
+                <div className="p-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-medium">
+                      {post.category}
+                    </span>
+                    <span className="text-gray-500 text-sm">{post.readTime}</span>
+                  </div>
+                  <h3 className="text-xl font-bold mb-2 text-gray-800 line-clamp-2">
+                    {post.title}
+                  </h3>
+                  <p className="text-gray-600 mb-4 line-clamp-3">
+                    {post.excerpt}
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-gray-500">{post.date}</span>
+                    <button 
+                      onClick={() => handleBlogClick(post)}
+                      className="text-blue-600 hover:text-blue-700 font-medium text-sm flex items-center space-x-1"
+                    >
+                      <span>Read More</span>
+                      <ExternalLink size={14} />
+                    </button>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Blog Modal */}
+      {selectedBlog && (
+        <div className="fixed inset-0 bg-gradient-to-br from-slate-900/80 to-blue-900/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-gradient-to-br from-white to-slate-50 rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-white/20">
+            <div className="relative">
+              <img 
+                src={selectedBlog.image} 
+                alt={selectedBlog.title}
+                className="w-full h-64 object-cover rounded-t-xl"
+              />
+              <button
+                onClick={handleCloseBlog}
+                className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-full p-2 shadow-lg hover:bg-white transition-colors"
+              >
+                <X size={20} className="text-gray-600" />
+              </button>
+            </div>
+            <div className="p-6 sm:p-8">
+              <div className="flex items-center justify-between mb-4">
+                <span className="px-3 py-1 bg-gradient-to-r from-blue-100 to-blue-50 text-blue-700 rounded-full text-xs font-medium shadow-sm">
+                  {selectedBlog.category}
+                </span>
+                <span className="text-gray-500 text-sm">{selectedBlog.readTime}</span>
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-bold mb-4 text-gray-800">
+                {selectedBlog.title}
+              </h2>
+              <div className="text-gray-600 space-y-4 whitespace-pre-line leading-relaxed">
+                {selectedBlog.content}
+              </div>
+              <div className="mt-6 pt-6 border-t border-gray-200">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-gray-500">{selectedBlog.date}</span>
+                  <div className="flex items-center space-x-2">
+                    <span className="text-sm text-gray-500">Share:</span>
+                    <div className="flex space-x-2">
+                      <button
+                        onClick={() => handleSocialShare('facebook')}
+                        className="p-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors"
+                        title="Share on Facebook"
+                      >
+                        <Facebook size={16} />
+                      </button>
+                      <button
+                        onClick={() => handleSocialShare('linkedin')}
+                        className="p-2 bg-blue-700 text-white rounded-full hover:bg-blue-800 transition-colors"
+                        title="Share on LinkedIn"
+                      >
+                        <LinkedinIcon size={16} />
+                      </button>
+                      <button
+                        onClick={() => handleSocialShare('medium')}
+                        className="p-2 bg-gray-800 text-white rounded-full hover:bg-gray-900 transition-colors"
+                        title="Share on Medium"
+                      >
+                        <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12z"/>
+                        </svg>
+                      </button>
+                      <button
+                        onClick={() => handleSocialShare('reddit')}
+                        className="p-2 bg-orange-600 text-white rounded-full hover:bg-orange-700 transition-colors"
+                        title="Share on Reddit"
+                      >
+                        <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/>
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Contact Section */}
       <section id="contact" className="py-12 sm:py-16 md:py-20 bg-gradient-to-br from-slate-50 to-blue-50">
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-8 sm:mb-12">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-blue-700">
               Get In Touch
             </h2>
           </div>
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
             <div>
-              <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-4 text-gray-800">
+              <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-4 text-blue-700">
                 Let's Work Together
               </h3>
               <p className="text-gray-600 leading-relaxed mb-6 text-sm sm:text-base">
@@ -347,7 +645,7 @@ const Portfolio = () => {
                     
                   </div>
                   <div className="min-w-0 flex-1">
-                    <h4 className="font-semibold text-gray-800 text-sm sm:text-base">Email</h4>
+                    <h4 className="font-semibold text-blue-700 text-sm sm:text-base">Email</h4>
                     <p className="text-gray-600 text-sm sm:text-base break-all">aakashkadiyan93@gmail.com</p>
                   </div>
                 </div>
@@ -358,7 +656,7 @@ const Portfolio = () => {
                     
                   </div>
                   <div className="min-w-0 flex-1">
-                    <h4 className="font-semibold text-gray-800 text-sm sm:text-base">LinkedIn</h4>
+                    <h4 className="font-semibold text-blue-700 text-sm sm:text-base">LinkedIn</h4>
                     <p className="text-gray-600 text-sm sm:text-base break-all">https://linkedin.com/in/aakash-kadiyan-6911b1194/</p>
                   </div>
                   
@@ -370,7 +668,7 @@ const Portfolio = () => {
                     
                   </div>
                   <div className="min-w-0 flex-1">
-                    <h4 className="font-semibold text-gray-800 text-sm sm:text-base">Phone</h4>
+                    <h4 className="font-semibold text-blue-700 text-sm sm:text-base">Phone</h4>
                     <p className="text-gray-600 text-sm sm:text-base break-all">+91-7011776638</p>
                   </div>
                   
@@ -378,7 +676,7 @@ const Portfolio = () => {
               </div>
             </div>
             
-            <div className="bg-gradient-to-br from-blue-50 to-purple-50 p-4 sm:p-6 lg:p-8 rounded-xl">
+            <div className="bg-gradient-to-br from-blue-50 to-purple-50 p-4 sm:p-6 lg:p-8 rounded-xl w-full max-w-md mx-auto">
               <form 
                 onSubmit={handleSubmit}
                 className="space-y-4 sm:space-y-5"
@@ -394,37 +692,37 @@ const Portfolio = () => {
                   </div>
                 )}
                 <div>
-                  <label className="block text-sm sm:text-base font-medium text-gray-700 mb-2">Name</label>
+                  <label className="block text-sm sm:text-base font-medium text-blue-700 mb-2">Name</label>
                   <input 
                     type="text" 
                     name="name"
                     value={formData.name}
                     onChange={handleInputChange}
-                    className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-300 text-sm sm:text-base"
+                    className="w-full px-4 py-2 sm:py-3 border border-gray-300 rounded-full focus:ring-2 focus:ring-blue-500 focus:border-blue-500 hover:border-blue-500 outline-none transition-all duration-300 text-sm sm:text-base bg-white/80"
                     placeholder="Your name"
                     required
                   />
                 </div>
                 <div>
-                  <label className="block text-sm sm:text-base font-medium text-gray-700 mb-2">Email</label>
+                  <label className="block text-sm sm:text-base font-medium text-blue-700 mb-2">Email</label>
                   <input 
                     type="email" 
                     name="email"
                     value={formData.email}
                     onChange={handleInputChange}
-                    className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-300 text-sm sm:text-base"
+                    className="w-full px-4 py-2 sm:py-3 border border-gray-300 rounded-full focus:ring-2 focus:ring-blue-500 focus:border-blue-500 hover:border-blue-500 outline-none transition-all duration-300 text-sm sm:text-base bg-white/80"
                     placeholder="your@email.com"
                     required
                   />
                 </div>
                 <div>
-                  <label className="block text-sm sm:text-base font-medium text-gray-700 mb-2">Message</label>
+                  <label className="block text-sm sm:text-base font-medium text-blue-700 mb-2">Message</label>
                   <textarea 
                     name="message"
                     value={formData.message}
                     onChange={handleInputChange}
                     rows="4" 
-                    className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-300 resize-none text-sm sm:text-base"
+                    className="w-full px-4 py-2 sm:py-3 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 hover:border-blue-500 outline-none transition-all duration-300 resize-none text-sm sm:text-base bg-white/80 min-h-[100px]"
                     placeholder="Tell me about your project..."
                     required
                   ></textarea>
@@ -437,7 +735,7 @@ const Portfolio = () => {
                 <button 
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 sm:py-4 rounded-lg font-semibold hover:shadow-lg transition-all duration-300 hover:scale-105 text-sm sm:text-base disabled:opacity-70 disabled:cursor-not-allowed"
+                  className="w-full rounded-full bg-gradient-to-r from-[#2563eb] to-[#1e40af] text-white px-6 py-3 font-semibold shadow-md hover:scale-105 hover:shadow-lg transition-all duration-300 text-base disabled:opacity-70 disabled:cursor-not-allowed"
                 >
                   {isSubmitting ? 'Sending...' : 'Send Message'}
                 </button>
@@ -448,10 +746,10 @@ const Portfolio = () => {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-6 sm:py-8">
+      <footer className="bg-gray-900 text-white py-3 sm:py-4 border-t border-gray-800">
         <div className="max-w-12xl mx-auto px-4 sm:px-6">
           <div className="text-center">
-            <p className="text-gray-400 text-sm sm:text-base">
+            <p className="text-gray-400 text-xs sm:text-sm">
               © 2025 Aakash Kadiyan
             </p>
           </div>
