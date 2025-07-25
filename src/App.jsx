@@ -112,7 +112,7 @@ const Portfolio = () => {
       title: "HireNest - A Job Portal",
       description: "HireNest is a modern Job Board platform for job seekers and employers. Discover, post, and manage jobs with AI-powered matching Alogrithms.",
       tech: ["React", "Node.js", "MongoDB", "Stripe"],
-      github: "https://github.com/aakashkadyan/hirenest_app_frontend",
+      github: "https://github.com/aakashkadyan/hirenest_app",
               live: "https://hirenest-app.vercel.app/",
       image: "https://i.postimg.cc/Dwjq2xKL/hirenest-updated.png" // Replace with actual uploaded screenshot URL
     },
